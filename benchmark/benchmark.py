@@ -1,29 +1,3 @@
-"""
-benchmark/benchmark.py
-======================
-Benchmarking engine for AES mode performance evaluation.
-
-This module is responsible solely for timing, aggregation, and result
-serialisation.  It imports the four crypto modules and the utility
-helpers, but contains no cryptographic logic of its own.
-
-Design
-------
-Each (mode × size) pair is measured across ``NUM_TRIALS`` independent
-trials.  The mean and standard deviation of encryption and decryption
-times are reported, along with derived throughput metrics (MB/s).
-
-The measurement window is gated tightly around the cipher operation:
-key generation, IV/nonce generation, and PKCS#7 padding computation all
-occur **outside** the timed region to isolate pure cipher cost.
-
-Timing
-------
-``time.perf_counter()`` provides sub-microsecond resolution on all major
-operating systems and is unaffected by system clock adjustments or NTP
-corrections.
-"""
-
 import os
 import csv
 import json
@@ -49,9 +23,8 @@ from utils.helpers import (
 )
 
 
-# ---------------------------------------------------------------------------
 # Core benchmarking function
-# ---------------------------------------------------------------------------
+
 
 def benchmark_mode(
     mode: str,
@@ -59,36 +32,7 @@ def benchmark_mode(
     key: bytes,
     trials: int = NUM_TRIALS,
 ) -> dict[str, Any]:
-    """
-    Time AES *mode* over *trials* independent encrypt-decrypt iterations.
-
-    Parameters
-    ----------
-    mode : str
-        One of ``'ECB'``, ``'CBC'``, ``'CTR'``, ``'GCM'``.
-    plaintext : bytes
-        Raw bytes to encrypt — generated outside this function so that
-        plaintext construction overhead is excluded from timing.
-    key : bytes
-        AES-256 key (32 bytes) — generated outside this function.
-    trials : int
-        Number of repetitions for statistical averaging.
-
-    Returns
-    -------
-    dict[str, Any]
-        Result record containing:
-
-        - ``mode``, ``data_size_bytes``, ``data_size_label``, ``trials``
-        - ``enc_time_mean_s``, ``enc_time_stdev_s``
-        - ``dec_time_mean_s``, ``dec_time_stdev_s``
-        - ``enc_throughput_MBps``, ``dec_throughput_MBps``
-
-    Raises
-    ------
-    ValueError
-        If *mode* is not one of the four supported values.
-    """
+   
     if mode not in MODES:
         raise ValueError(f"Unsupported mode '{mode}'. Choose from: {MODES}")
 
@@ -160,9 +104,9 @@ def benchmark_mode(
     }
 
 
-# ---------------------------------------------------------------------------
+
 # Full experiment runner
-# ---------------------------------------------------------------------------
+
 
 def run_experiment(trials: int = NUM_TRIALS) -> list[dict[str, Any]]:
     """
@@ -211,9 +155,8 @@ def run_experiment(trials: int = NUM_TRIALS) -> list[dict[str, Any]]:
     return all_results
 
 
-# ---------------------------------------------------------------------------
 # Persistence helpers
-# ---------------------------------------------------------------------------
+
 
 def save_csv(results: list[dict[str, Any]], filepath: str) -> None:
     """
@@ -252,9 +195,8 @@ def save_json(results: list[dict[str, Any]], filepath: str) -> None:
     print(f"  [OK] JSON → {filepath}")
 
 
-# ---------------------------------------------------------------------------
 # Console display
-# ---------------------------------------------------------------------------
+
 
 def print_results_table(results: list[dict[str, Any]]) -> None:
     """
