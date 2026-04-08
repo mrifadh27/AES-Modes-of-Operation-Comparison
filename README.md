@@ -180,14 +180,3 @@ Step 6 — Result Persistence
 **Recommendation:** Use AES-256-GCM for all new systems requiring
 confidentiality and integrity. GCM is only 15% slower than CTR at 1 MB
 while providing complete authenticated encryption.
-
----
-
-## References
-
-1. NIST, "Advanced Encryption Standard (AES)," FIPS PUB 197, 2001.  
-2. M. Dworkin, "Recommendation for Block Cipher Modes of Operation," NIST SP 800-38A, 2001.  
-3. D. A. McGrew and J. Viega, "The Galois/Counter Mode of Operation (GCM)," 2004.  
-4. M. Dworkin, "GCM and GMAC," NIST SP 800-38D, 2007.  
-5. E. Rescorla, "TLS Protocol Version 1.3," RFC 8446, IETF, 2018.  
-6. S. Vaudenay, "Security Flaws Induced by CBC Padding," EUROCRYPT 2002.
