@@ -1,34 +1,8 @@
-"""
-utils/helpers.py
-================
-Cryptographic helper utilities for AES key, IV, and nonce generation.
-
-All random material is sourced from the OS entropy pool via
-``Crypto.Random.get_random_bytes``, which reads from /dev/urandom on Linux
-and CryptGenRandom on Windows — both CSPRNG-backed sources.
-
-Constants
----------
-KEY_SIZE_BYTES : int
-    32 bytes = 256 bits.  AES-256 provides the maximum security margin
-    available under the AES specification.
-BLOCK_SIZE : int
-    16 bytes = 128 bits.  Fixed by the AES specification regardless of
-    key size.
-INPUT_SIZES : dict[str, int]
-    Canonical input sizes used throughout the experiment.
-NUM_TRIALS : int
-    Number of repeated timing trials per (mode × size) pair.
-MODES : list[str]
-    Ordered list of AES modes evaluated.
-"""
-
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
-# ---------------------------------------------------------------------------
 # Constants
-# ---------------------------------------------------------------------------
+
 
 KEY_SIZE_BYTES: int = 32          # AES-256
 BLOCK_SIZE: int = AES.block_size  # 16 bytes — fixed by AES spec
@@ -45,9 +19,8 @@ NUM_TRIALS: int = 5
 MODES: list[str] = ["ECB", "CBC", "CTR", "GCM"]
 
 
-# ---------------------------------------------------------------------------
 # Key & randomness generation
-# ---------------------------------------------------------------------------
+
 
 def generate_key() -> bytes:
     """
@@ -109,10 +82,8 @@ def generate_nonce_gcm() -> bytes:
     """
     return get_random_bytes(12)
 
-
-# ---------------------------------------------------------------------------
 # Formatting utilities
-# ---------------------------------------------------------------------------
+
 
 def bytes_to_label(n: int) -> str:
     """
