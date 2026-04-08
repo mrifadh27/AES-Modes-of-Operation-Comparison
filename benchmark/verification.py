@@ -1,24 +1,3 @@
-"""
-benchmark/verification.py
-=========================
-Correctness verification and ECB pattern-leakage demonstration.
-
-These routines are executed **before** any benchmarking to ensure that
-all four AES mode implementations produce correct round-trip results.
-Running verification first prevents benchmarking silent failures where
-a bug causes fast but incorrect output.
-
-Functions
----------
-verify_correctness
-    Round-trip encrypt-decrypt assertions for all four modes across
-    multiple message sizes, plus GCM tamper-detection check.
-demonstrate_ecb_weakness
-    Constructs a structured plaintext with repeating 16-byte blocks and
-    shows that ECB ciphertext reveals the repetitions — empirical evidence
-    of the ECB Penguin vulnerability.
-"""
-
 import os
 from collections import Counter
 
@@ -29,9 +8,8 @@ import crypto.gcm as gcm
 from utils.helpers import generate_key, generate_iv, BLOCK_SIZE
 
 
-# ---------------------------------------------------------------------------
 # Correctness verification
-# ---------------------------------------------------------------------------
+
 
 def verify_correctness() -> bool:
     """
@@ -96,10 +74,8 @@ def verify_correctness() -> bool:
     print(f"\n  {status}\n")
     return all_passed
 
-
-# ---------------------------------------------------------------------------
 # ECB pattern-leakage demonstration
-# ---------------------------------------------------------------------------
+
 
 def demonstrate_ecb_weakness() -> dict:
     """
