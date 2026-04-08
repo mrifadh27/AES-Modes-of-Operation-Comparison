@@ -1,28 +1,3 @@
-"""
-plotting/plotting.py
-====================
-Visualisation functions for AES benchmark results.
-
-All figures are saved as high-resolution PNG files (150 DPI) suitable
-for inclusion in an IEEE-formatted academic report.
-
-Figures Produced
-----------------
-Figure 1 — Encryption time vs input size (line chart with error bars).
-Figure 2 — Encryption throughput by mode and size (grouped bar chart).
-Figure 3 — Decryption time vs input size (line chart).
-Figure 4 — Security feature score by mode (qualitative bar chart).
-
-Colour Scheme
--------------
-Each mode is consistently coloured across all figures:
-
-- ECB → Red   (#E74C3C) — visually flags its insecurity.
-- CBC → Blue  (#3498DB)
-- CTR → Green (#2ECC71)
-- GCM → Purple (#9B59B6)
-"""
-
 import matplotlib
 matplotlib.use("Agg")  # non-interactive backend — no display required
 import matplotlib.pyplot as plt
@@ -30,9 +5,9 @@ import pandas as pd
 
 from utils.helpers import MODES, INPUT_SIZES
 
-# ---------------------------------------------------------------------------
+
 # Consistent colour map across all figures
-# ---------------------------------------------------------------------------
+
 
 COLOURS: dict[str, str] = {
     "ECB": "#E74C3C",   # red   — signals insecurity
@@ -44,9 +19,9 @@ COLOURS: dict[str, str] = {
 SIZE_ORDER: list[str] = list(INPUT_SIZES.keys())  # ["1 KB", "10 KB", …]
 
 
-# ---------------------------------------------------------------------------
+
 # Internal helpers
-# ---------------------------------------------------------------------------
+
 
 def _ordered_dataframe(results: list[dict]) -> pd.DataFrame:
     """Return a DataFrame with ``data_size_label`` as an ordered Categorical."""
@@ -57,9 +32,8 @@ def _ordered_dataframe(results: list[dict]) -> pd.DataFrame:
     return df.sort_values("data_size_label")
 
 
-# ---------------------------------------------------------------------------
 # Figure 1 — Encryption Time
-# ---------------------------------------------------------------------------
+
 
 def plot_encryption_time(
     results: list[dict],
@@ -109,9 +83,8 @@ def plot_encryption_time(
     print(f"  [OK] Figure 1 → {output_path}")
 
 
-# ---------------------------------------------------------------------------
 # Figure 2 — Encryption Throughput
-# ---------------------------------------------------------------------------
+
 
 def plot_throughput(
     results: list[dict],
@@ -161,9 +134,8 @@ def plot_throughput(
     print(f"  [OK] Figure 2 → {output_path}")
 
 
-# ---------------------------------------------------------------------------
 # Figure 3 — Decryption Time
-# ---------------------------------------------------------------------------
+
 
 def plot_decryption_time(
     results: list[dict],
@@ -208,9 +180,8 @@ def plot_decryption_time(
     print(f"  [OK] Figure 3 → {output_path}")
 
 
-# ---------------------------------------------------------------------------
 # Figure 4 — Security Feature Scores
-# ---------------------------------------------------------------------------
+
 
 def plot_security_summary(
     output_path: str = "results/fig4_security_summary.png",
@@ -280,9 +251,7 @@ def plot_security_summary(
     print(f"  [OK] Figure 4 → {output_path}")
 
 
-# ---------------------------------------------------------------------------
 # Convenience wrapper — generate all figures at once
-# ---------------------------------------------------------------------------
 
 def generate_all_figures(results: list[dict]) -> None:
     """
