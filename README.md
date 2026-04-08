@@ -183,19 +183,6 @@ while providing complete authenticated encryption.
 
 ---
 
-## Group Members
-
-| Student ID | Name |
-|------------|------|
-| 10965132 | NM Rifadh (Lead) |
-| 10965127 | Selladurai Prageeth |
-| 10965103 | Florington Dianstith |
-| 10965119 | Mithyab R |
-| 10967233 | Rathnayaka Bandara |
-| 10967286 | Thenuri Sehasna |
-
----
-
 ## References
 
 1. NIST, "Advanced Encryption Standard (AES)," FIPS PUB 197, 2001.  
